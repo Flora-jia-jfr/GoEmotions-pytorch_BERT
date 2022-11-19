@@ -82,7 +82,8 @@ def train(args,
     model.zero_grad()
     train_iterator = trange(int(args.num_train_epochs), desc="Epoch")
     for _ in train_iterator:
-        epoch_iterator = tqdm(train_dataloader, desc="Iteration")
+        # epoch_iterator = tqdm(train_dataloader, desc="Iteration")
+        epoch_iterator = train_dataloader
         for step, batch in enumerate(epoch_iterator):
             model.train()
             batch = tuple(t.to(args.device) for t in batch)
@@ -163,7 +164,7 @@ def evaluate(args, model, eval_dataset, mode, global_step=None):
     preds = None
     out_label_ids = None
 
-    for batch in tqdm(eval_dataloader, desc="Evaluating"):
+    for batch in eval_dataloader:
         model.eval()
         batch = tuple(t.to(args.device) for t in batch)
 
